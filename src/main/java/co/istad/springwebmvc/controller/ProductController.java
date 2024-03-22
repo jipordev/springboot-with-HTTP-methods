@@ -2,6 +2,8 @@ package co.istad.springwebmvc.controller;
 
 import co.istad.springwebmvc.dto.ProductCreateRequest;
 import co.istad.springwebmvc.dto.ProductEditRequest;
+import co.istad.springwebmvc.dto.ProductResponse;
+import co.istad.springwebmvc.model.Product;
 import co.istad.springwebmvc.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +34,9 @@ public class ProductController {
     }
 
 
-    @PutMapping("/{uuid}")
-    void editProductByUuid(@PathVariable String uuid,@RequestBody ProductEditRequest request){
-        productService.updateProductByUuid(uuid,request);
+    @PutMapping("/{id}")
+    ProductResponse editProductById(@PathVariable Integer id, @Valid @RequestBody ProductEditRequest request){
+        return productService.editProductById(id, request);
     }
 
     @GetMapping

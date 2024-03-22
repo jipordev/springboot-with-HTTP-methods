@@ -1,4 +1,9 @@
 package co.istad.springwebmvc.repository;
 
-public interface ProductRepository {
+import co.istad.springwebmvc.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+
 }
