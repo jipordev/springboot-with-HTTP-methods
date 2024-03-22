@@ -5,6 +5,7 @@ import co.istad.springwebmvc.dto.ProductEditRequest;
 import co.istad.springwebmvc.dto.ProductResponse;
 import co.istad.springwebmvc.model.Product;
 import co.istad.springwebmvc.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private final List<Product> productList;
@@ -22,31 +24,49 @@ public class ProductServiceImpl implements ProductService {
         productList = new ArrayList<>();
         Product p1 = new Product();
         p1.setId(1);
-        p1.setUuid(UUID.randomUUID().toString());
-        p1.setName("imax");
+        p1.setUuid(shortUuid(UUID.randomUUID().toString()));
+        p1.setName("iPhone XS Max");
         p1.setPrice(1300.0);
         p1.setQty(2);
         p1.setImportedDate(LocalDateTime.now());
         p1.setStatus(true);
         Product p2 = new Product();
         p2.setId(2);
-        p2.setUuid(UUID.randomUUID().toString());
-        p2.setName("imac");
+        p2.setUuid(shortUuid(UUID.randomUUID().toString()));
+        p2.setName("iPhone 11 Pro Max");
         p2.setPrice(1600.0);
         p2.setQty(2);
         p2.setImportedDate(LocalDateTime.now());
         p2.setStatus(true);
         Product p3 = new Product();
         p3.setId(3);
-        p3.setUuid(UUID.randomUUID().toString());
-        p3.setName("imac");
+        p3.setUuid(shortUuid(UUID.randomUUID().toString()));
+        p3.setName("iPhone 12 Pro Max");
         p3.setPrice(1600.0);
         p3.setQty(3);
         p3.setImportedDate(LocalDateTime.now());
         p3.setStatus(true);
+        Product p4 = new Product();
+        p4.setId(4);
+        p4.setUuid(shortUuid(UUID.randomUUID().toString()));
+        p4.setName("iPhone 13 Pro Max");
+        p4.setPrice(1600.0);
+        p4.setQty(3);
+        p4.setImportedDate(LocalDateTime.now());
+        p4.setStatus(true);
+        Product p5 = new Product();
+        p5.setId(5);
+        p5.setUuid(shortUuid(UUID.randomUUID().toString()));
+        p5.setName("iPhone 14 Pro Max");
+        p5.setPrice(1600.0);
+        p5.setQty(3);
+        p5.setImportedDate(LocalDateTime.now());
+        p5.setStatus(true);
         productList.add(p1);
         productList.add(p2);
         productList.add(p3);
+        productList.add(p4);
+        productList.add(p5);
     }
 
     @Override
@@ -87,6 +107,9 @@ public class ProductServiceImpl implements ProductService {
                         product.getQty()
                 )).findFirst().orElseThrow();
     }
+    static String shortUuid(String uuid){
+        return uuid.substring(0,8);
+    }
 
     @Override
     public void createNewProduct(ProductCreateRequest request) {
@@ -95,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
         newProduct.setPrice(request.price());
         newProduct.setQty(request.qty());
         newProduct.setId(productList.size() + 1);
-        newProduct.setUuid(UUID.randomUUID().toString());
+        newProduct.setUuid(shortUuid(UUID.randomUUID().toString()));
         newProduct.setImportedDate(LocalDateTime.now());
         newProduct.setStatus(true);
         productList.add(newProduct);
@@ -116,7 +139,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean deleteProductById(Integer id) {
-        return productList.removeIf(product -> product.getId().equals(id));
+    public void deleteProductByUuid(String uuid) {
+        productList.removeIf(product -> product.getUuid().equals(uuid));
+        log.info("Affected row: {}",1);
     }
 }
