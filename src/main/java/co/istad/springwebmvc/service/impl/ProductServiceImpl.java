@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse findProductByUuid(String uuid) {
-        return null;
+        return productRepository.findByUuid(uuid);
     }
 
     @Override
@@ -95,7 +95,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProductByUuid(String uuid) {
+    public void deleteProductByUuid(Integer id) {
+        if (!productRepository.existsById(id)){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Product has not been found"
+            );
+        }
+
+        productRepository.deleteById(id);
 
     }
 }

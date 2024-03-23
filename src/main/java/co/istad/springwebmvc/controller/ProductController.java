@@ -23,16 +23,15 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     void createNewProduct(@Valid @RequestBody ProductCreateRequest request){
-        System.out.println("Request" + request);
+
         productService.createNewProduct(request);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{uuid}")
-    void deleteProductByUuid(@PathVariable String uuid){
-        productService.deleteProductByUuid(uuid);
+    @DeleteMapping("/{id}")
+    void deleteProductById(@PathVariable Integer id) {
+        productService.deleteProductByUuid(id);
     }
-
 
     @PutMapping("/{id}")
     ProductResponse editProductById(@PathVariable Integer id, @Valid @RequestBody ProductEditRequest request){
