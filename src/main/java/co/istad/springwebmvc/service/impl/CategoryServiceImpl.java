@@ -41,7 +41,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse findCategoryByName(String name) {
-        return null;
+        if (!categoryRepository.existsByName(name)){
+            throw new ResponseStatusException(
+                    HttpStatus.NO_CONTENT,
+                    "Category name has not been found"
+            );
+        }
+        return categoryRepository.findByName(name);
     }
 
     @Override

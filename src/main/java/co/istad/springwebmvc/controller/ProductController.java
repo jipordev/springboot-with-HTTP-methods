@@ -48,16 +48,20 @@ public class ProductController {
         );
     }
     @GetMapping("/{id}")
-    Map<String, Object> findProductById(@PathVariable Integer id) {
-        return Map.of(
-                "data",productService.findProductById(id)
+    ResponseEntity<?> findProductById(@PathVariable Integer id) {
+        return ResponseEntity.accepted().body(
+                Map.of(
+                        "data", productService.findProductById(id)
+                )
         );
     }
 
     @GetMapping("/uuid/{uuid}")
-    Map<String, Object> findProductByUuid(@PathVariable String uuid) {
-        return Map.of(
-                "data",productService.findProductByUuid(uuid)
+    ResponseEntity<?> findProductByUuid(@PathVariable String uuid) {
+        return ResponseEntity.accepted().body(
+                Map.of(
+                        "data",productService.findProductByUuid(uuid)
+                )
         );
     }
 

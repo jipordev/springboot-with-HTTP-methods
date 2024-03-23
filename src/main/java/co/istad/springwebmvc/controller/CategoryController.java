@@ -40,10 +40,25 @@ public class CategoryController {
                 )
         );
     }
-    @GetMapping("/{id}")
-    CategoryResponse findCategoryById(@PathVariable Integer id){
-        return categoryService.findCategoryById(id);
+
+    @GetMapping("/name/{name}")
+    ResponseEntity<?> findCategoryByName(@PathVariable String name) {
+        return ResponseEntity.accepted().body(
+                Map.of(
+                        "data",categoryService.findCategoryByName(name)
+                )
+        );
     }
+
+    @GetMapping("/{id}")
+    ResponseEntity<?> findCategoryById(@PathVariable Integer id){
+        return ResponseEntity.accepted().body(
+                Map.of(
+                        "data", categoryService.findCategoryById(id)
+                )
+        );
+    }
+
     @PostMapping
     void createNewCategory(@Valid @RequestBody CategoryRequest categoryRequest){
         categoryService.createNewCategory(categoryRequest);
@@ -59,4 +74,5 @@ public class CategoryController {
     void deleteCategoryById(@PathVariable Integer id) {
          categoryService.deleteCategoryById(id);
     }
+
 }
